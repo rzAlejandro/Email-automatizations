@@ -1,0 +1,30 @@
+name: Ejecutar Script Semanalmente
+
+on:
+  schedule:
+    - cron: '0 13 * * 1'  # Ejecutar cada lunes a las 9 AM UTC
+
+jobs:
+  run-script:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clonar el repositorio
+        uses: actions/checkout@v3
+
+      - name: Configurar Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: '3.x'
+
+      - name: Configurar variable de entorno
+        run: 
+          echo "OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}" >> $GITHUB_ENV
+          echo "GENAI_API_KEY=${{ secrets.GENAI_API_KEY }}" >> $GITHUB_ENV
+          echo "EMAIL_PASSWORD=${{ secrets.EMAIL_PASSWORD }}" >> $GITHUB_ENV
+          
+      - name: Instalar dependencias
+        run: |
+          pip install -r requirements.txt || echo "No hay dependencias"
+
+      - name: Ejecutar el script
+        run: python recomendacion_semanal_openAI.py
