@@ -2,7 +2,7 @@ name: Ejecutar Script Semanalmente
 
 on:
   schedule:
-    - cron: '45 14 * * 2'  # Ejecutar cada lunes a las 9 AM UTC
+    - cron: '10 15 * * 2'  # Ejecutar cada lunes a las 9 AM UTC
 
 jobs:
   run-script:
