@@ -82,6 +82,7 @@ OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 client = openai.OpenAI(api_key=OPENAI_API_KEY)
 
 #Credenciales GenAI
+print(os.getenv("GENAI_API_KEY"))
 genai.configure(api_key=os.getenv("GENAI_API_KEY"))
 
 # Configuración del correo
