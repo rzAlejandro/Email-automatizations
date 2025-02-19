@@ -41,7 +41,7 @@ def enviar_correo(recomendacion):
     msg = MIMEMultipart()
     msg["From"] = EMAIL_REMITE
     msg["To"] = EMAIL_DESTINO
-    msg["Subject"] = "Recomendaciones diarias"
+    msg["Subject"] = "Recomendaciones sobre música, comida y libros"
 
     # Convertir el mensaje con formato HTML
     recomendacion_html = formatear_texto_a_html(recomendacion)
@@ -49,7 +49,7 @@ def enviar_correo(recomendacion):
     <html>
     <body>
         <p>Hola,</p>
-        <p>Aquí tienes la recomendación diaria:</p>
+        <p>Aquí tienes la recomendación:</p>
         <p>{recomendacion_html}</p>
         <p>Saludos.</p>
     </body>
