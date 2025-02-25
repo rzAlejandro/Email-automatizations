@@ -25,4 +25,4 @@ jobs:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           GENAI_API_KEY: ${{ secrets.GENAI_API_KEY }}
           EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
-        run: python recomendacion_semanal_openAI.py
+        run: python recomendacion_semanal_mfb.py
