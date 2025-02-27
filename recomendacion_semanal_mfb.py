@@ -26,7 +26,7 @@ def obtener_openai(prompt):
     return response.choices[0].message.content
 
 def obtener_genai(prompt):
-    response = genai.GenerativeModel("gemini-pro").generate_content(prompt)
+    response = genai.GenerativeModel("gemini-2.0-flash-001").generate_content(prompt)
     return response.text
 
 def formatear_texto_a_html(texto):
