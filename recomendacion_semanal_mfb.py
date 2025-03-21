@@ -14,20 +14,29 @@ import re
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
-# Función para obtener noticias de tecnología
-def obtener_openai(prompt):
-    response = openai.chat.completions.create(
-        model="gpt-3.5-turbo",
-        messages=[
-            {"role": "system", "content": "Eres un experto sistema recomendador."},
-            {"role": "user", "content": prompt}
-        ]
-    )
-    return response.choices[0].message.content
+def validar_credencial(valor, nome):
+    if not valor:
+        raise ValueError(f"Erro: {nome} não está definido nas variáveis de ambiente.")
+    return valor
 
-def obtener_genai(prompt):
-    response = genai.GenerativeModel("gemini-2.0-flash-001").generate_content(prompt)
-    return response.text
+# Función para obtener noticias de tecnología
+def obtener_recomendaciones(prompt, usar_openai=True):
+    try:
+        if usar_openai:
+            response = openai.chat.completions.create(
+                model="gpt-3.5-turbo",
+                messages=[
+                    {"role": "system", "content": "Eres un experto sistema recomendador."},
+                    {"role": "user", "content": prompt}
+                ]
+            )
+            return response.choices[0].message.content
+        else:
+            response = genai.GenerativeModel("gemini-2.0-flash-001").generate_content(prompt)
+            return response.text
+    except Exception as e:
+        print(f"Erro ao obter recomendações: {e}")
+        return "Não foi possível obter recomendações no momento."
 
 def formatear_texto_a_html(texto):
     """
@@ -56,7 +65,7 @@ def enviar_correo(recomendacion):
     </html>
     """
 
-    msg.attach(MIMEText(cuerpo_mensaje, "html"))  # Enviar como HTML
+    msg.attach(MIMEText(cuerpo_mensaje, "html"))
 
     try:
         server = smtplib.SMTP("smtp.gmail.com", 587)
@@ -65,8 +74,17 @@ def enviar_correo(recomendacion):
         server.sendmail(EMAIL_REMITE, EMAIL_DESTINO, msg.as_string())
         server.quit()
         print("Correo enviado exitosamente.")
+    except smtplib.SMTPException as e:
+        print(f"Erro ao enviar o e-mail: {e}")
     except Exception as e:
-        print(f"Error enviando el correo: {e}")
+        print(f"Erro inesperado ao enviar e-mail: {e}")
+
+OPENAI_API_KEY = validar_credencial(os.getenv("OPENAI_API_KEY"), "OPENAI_API_KEY")
+genai.configure(api_key=validar_credencial(os.getenv("GENAI_API_KEY"), "GENAI_API_KEY"))
+EMAIL_REMITE = validar_credencial("automatizacionesrrzzalejandro@gmail.com", "EMAIL_REMITE")
+EMAIL_DESTINO = validar_credencial("rrzzalejandro@gmail.com", "EMAIL_DESTINO")
+EMAIL_PASSWORD = validar_credencial(os.getenv("EMAIL_PASSWORD"), "EMAIL_PASSWORD")
+
 
 # Ejecutar funciones
 prompt = (
@@ -77,19 +95,6 @@ prompt = (
         "Cada sección debe estar bien diferenciada con un título. No deben ser secciones extensas, quiero que se pueda leer en 10 minutos como máximo. Deben estar escritas en español, en un tono sencillo y conciso. Utiliza puntos para separar las noticias. Además, evita repetir las respuestas. Cada semana te haré dos peticiones.\n"
     )
 
-#Credenciales OpenAI
-OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
-client = openai.OpenAI(api_key=OPENAI_API_KEY)
-
-#Credenciales GenAI
-print(os.getenv("GENAI_API_KEY"))
-genai.configure(api_key=os.getenv("GENAI_API_KEY"))
-
-# Configuración del correo
-EMAIL_REMITE = "automatizacionesrrzzalejandro@gmail.com"
-EMAIL_DESTINO = "rrzzalejandro@gmail.com"
-EMAIL_PASSWORD = os.getenv("EMAIL_PASSWORD")
-
-#recomendacion = obtener_openai(prompt)
-recomendacion = obtener_genai(prompt)
+tipo_modelo = True
+recomendacion = obtener_recomendaciones(prompt, usar_openai=tipo_modelo)
 enviar_correo(recomendacion)
