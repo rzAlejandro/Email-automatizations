@@ -65,7 +65,7 @@ def enviar_correo(recomendacion):
     </html>
     """
 
-    msg.attach(MIMEText(cuerpo_mensaje, "html"))  # Enviar como HTML
+    msg.attach(MIMEText(cuerpo_mensaje, "html"))
 
     try:
         server = smtplib.SMTP("smtp.gmail.com", 587)
