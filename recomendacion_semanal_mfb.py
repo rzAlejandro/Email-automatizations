@@ -74,7 +74,7 @@ prompt = (
         "1. Musicales: tres artistas y dos canciones por cada artista, teniendo en cuenta que mis gustos son: pop, rock pop, rock,  flamenco, indie, reggaeton o música latina pero más comercial...\n"
         "2. Alimentaria: 3 recetas y la lista de ingredientes de cada una. Si tienes acceso a internet, calcula cuanto costaría realizar la receta en base a los precios de los productos en el Mercadona.\n"
         "3. Lectora: dos libros y sus autores, teniendo en cuenta que mis gustos son: novelas, novelas históricas, thriller, policíacas, de desarrollo personal. Además, incluye un breve sinopsis. Si tienes acceso a internet, añade la puntuación del libro en Amazon y su precio \n"
-        "Cada sección debe estar bien diferenciada con un título. No deben ser secciones extensas, quiero que se pueda leer en 10 minutos como máximo. Deben estar escritas en español, en un tono sencillo y conciso. Utiliza puntos para separar las noticias\n"
+        "Cada sección debe estar bien diferenciada con un título. No deben ser secciones extensas, quiero que se pueda leer en 10 minutos como máximo. Deben estar escritas en español, en un tono sencillo y conciso. Utiliza puntos para separar las noticias. Además, evita repetir las respuestas. Cada semana te haré dos peticiones.\n"
     )
 
 #Credenciales OpenAI
