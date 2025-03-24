@@ -20,7 +20,7 @@ def validar_credencial(valor, nome):
     return valor
 
 # Función para obtener noticias de tecnología
-def obtener_recomendaciones(prompt, usar_openai=True):
+def obtener_recomendaciones(prompt, usar_openai=False):
     try:
         if usar_openai:
             response = openai.chat.completions.create(
@@ -95,6 +95,6 @@ prompt = (
         "Cada sección debe estar bien diferenciada con un título. No deben ser secciones extensas, quiero que se pueda leer en 10 minutos como máximo. Deben estar escritas en español, en un tono sencillo y conciso. Utiliza puntos para separar las noticias. Además, evita repetir las respuestas. Cada semana te haré dos peticiones.\n"
     )
 
-tipo_modelo = True
+tipo_modelo = False
 recomendacion = obtener_recomendaciones(prompt, usar_openai=tipo_modelo)
 enviar_correo(recomendacion)
